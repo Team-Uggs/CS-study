@@ -34,10 +34,18 @@ userRouter.post(
 // {userId: id, usernameVerified: true, passwordVerified: false}
 
 userRouter.post('/login',
-  unitControllers.verifyUser, (req, res) => {
+  // unitControllers.verifyUser,
+  (req, res) => {
     console.log('inside login post anonymous');
     // what should happen here on successful log in?
-    return res.status(200).json(res.locals.login);
+    // return res.status(200).json(res.locals.login);
+    res.cookie('access_token', 'logged-in',
+      {
+        expires: new Date(Date.now() + 50000),
+        httpOnly: true,
+      });
+
+    return res.status(200).json('reached login');
   });
 
 
