@@ -36,7 +36,7 @@ unitsRouter.get('/',
 
   unitsRouter.get('/quiz',
   unitControllers.getQuestions,
-  (req, res) => {
+  (req, res) => {  
     res.status(200).json(res.locals.units);
   });
 
