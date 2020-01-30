@@ -26,6 +26,7 @@ app.use(
       METHOD: ${req.method},
       URL: ${req.url},
       ORIGINAL URL: ${req.originalUrl},
+      query: ${JSON.stringify(req.query, null, 2)}\n,
       BODY: ${JSON.stringify(req.body, null, 2)}\n)`,
     );
     if (req.cookies) console.log('our cookies: ', req.cookies);

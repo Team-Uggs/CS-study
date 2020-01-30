@@ -2,7 +2,7 @@ const express = require('express');
 
 
 const userRouter = express.Router();
-const unitControllers = require('../controllers/userControllers.js');
+const userControllers = require('../controllers/userControllers.js');
 
 
 // ****** below for signup / login *******
@@ -13,7 +13,7 @@ const unitControllers = require('../controllers/userControllers.js');
 
 userRouter.post(
   '/signup',
-  unitControllers.createUser,
+  userControllers.createUser,
   (req, res) => {
     console.log('inside signup post anonymous');
 
@@ -34,19 +34,33 @@ userRouter.post(
 // {userId: id, usernameVerified: true, passwordVerified: false}
 
 userRouter.post('/login',
-  // unitControllers.verifyUser,
+  userControllers.verifyUser,
   (req, res) => {
     console.log('inside login post anonymous');
     // what should happen here on successful log in?
     // return res.status(200).json(res.locals.login);
-    res.cookie('access_token', 'logged-in',
-      {
-        expires: new Date(Date.now() + 50000),
-        httpOnly: true,
-      });
+    // res.cookie('access_token', 'logged-in',
+    //   {
+    //     expires: new Date(Date.now() + 50000),
+    //     httpOnly: true,
+    //   });
 
-    return res.status(200).json('reached login');
+    // check if the username or password is missing
+    const { userNameVerified, passwordVerified } = res.locals.login;
+    if (userNameVerified && passwordVerified) {
+      console.log('about to redirect');
+      return res.status(200).redirect('/main-container');
+      // .json({ loginstatus: 'success' });
+    }
+    // res.status(401).redirect('/');
+    return res.status(401).json({ loginstatus: 'fail' });
   });
+
+userRouter.delete('/logout',
+  userControllers.logoutUser,
+  // destroy cookies
+  // send redirect to login page
+);
 
 
 module.exports = userRouter;
