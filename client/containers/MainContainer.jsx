@@ -12,9 +12,9 @@ function MainContainer (props) {
       <NavBar
         units={ props.units }
         updateCurrentUnit= { props.updateCurrentUnit } />
-      <nav id='navBar'>
-        <ul id='navbarList'>
-          <Link to='/main-container/create-unit'>Create New Unit</Link>
+      <nav id='navBar' className='new-unit-navbar'>
+        <ul id='navbarList' className='new-unit-button'>
+          <Link to='/main-container/create-unit'>CREATE NEW UNIT</Link>
         </ul>
       </nav>
         <Switch>

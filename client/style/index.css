@@ -82,6 +82,17 @@ a:hover {
   background-color: #02A3E9;
 }
 
+.new-unit-navbar {
+  display: flex;
+  justify-content: center;
+}
+
+.new-unit-button {
+  align-items: center;
+  text-align: center;
+  max-width: 30%;
+}
+
 .flashCardList {
   display: flex;
   flex-wrap: wrap;
