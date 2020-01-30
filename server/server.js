@@ -1,6 +1,7 @@
 const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 
 const userRouter = require('./routes/userRouter');
 const unitsRouter = require('./routes/unitsRouter');
@@ -13,7 +14,9 @@ const flashcardControllers = require('./controllers/flashcardControllers.js');
 
 const schema = require('./graphql/graphql.js');
 
+app.use(cookieParser());
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded());
 
 
 app.use(
@@ -22,8 +25,11 @@ app.use(
       `******* FLOW TEST *******
       METHOD: ${req.method},
       URL: ${req.url},
+      ORIGINAL URL: ${req.originalUrl},
+      query: ${JSON.stringify(req.query, null, 2)}\n,
       BODY: ${JSON.stringify(req.body, null, 2)}\n)`,
     );
+    if (req.cookies) console.log('our cookies: ', req.cookies);
     // invoke next piece of middleware
     return next();
   },
