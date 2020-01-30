@@ -12,7 +12,7 @@ function LoginContainer (props) {
           <input name="password" type="password" placeholder="password"></input>
           <input type='submit' value="login"></input>
         </form>
-        <Link to='/sign-up'>Sign up</Link>
+        <Link className='submission' to='/sign-up'>Sign up</Link>
       </div>
     </div>
   )
