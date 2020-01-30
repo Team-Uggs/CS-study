@@ -57,6 +57,8 @@ userControllers.createUser = (req, res, next) => {
 userControllers.verifyUser = (req, res, next) => {
   // write code here
   const { username, password } = req.body;
+  console.log('username: ', username);
+  console.log('password: ', password);
 
   const findUser = `SELECT * FROM "userlogin" WHERE username='${username}'`;
 
@@ -69,8 +71,13 @@ userControllers.verifyUser = (req, res, next) => {
       }
 
       // else if username exist: do the following
+      console.log(response.rows);
       bcrypt.compare(password, response.rows[0].password, (err, result) => {
         // result will be true if it's a match, false otherwise;
+        if (result) {
+          res.cookie('username', username);
+        }
+        console.log(result);
         res.locals.login = {
           userId: response.rows[0].id,
           userNameVerified: true,
@@ -79,6 +86,10 @@ userControllers.verifyUser = (req, res, next) => {
         return next();
       });
     });
+};
+
+userControllers.logoutUser = (req, res, next) => {
+
 };
 
 module.exports = userControllers;

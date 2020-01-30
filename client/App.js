@@ -1,18 +1,19 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import './style/index.css';
 
 import MainContainer from './containers/MainContainer.jsx';
 import LoginContainer from './containers/LoginContainer.jsx';
 import SignUpContainer from './containers/SignUpContainer.jsx';
+import LoginStatus from './components/LoginStatus.jsx';
 
 // creating a router component here that will be rendered to
 class App extends Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       units: [],
@@ -23,7 +24,7 @@ class App extends Component {
       currentResources: null,
       question: true,
       questionsArray: [true],
-    }
+    };
 
     this.updateCurrentUnit = this.updateCurrentUnit.bind(this);
     this.updateDrilledState = this.updateDrilledState.bind(this);
@@ -48,7 +49,7 @@ class App extends Component {
 
     this.setState({
       currentUnitIndex: currentUnitId,
-      currentUnitData: currentUnitData,
+      currentUnitData,
       // clears the questions array after a re-selection on the navbar
       questionsArray: [],
     });
@@ -57,7 +58,7 @@ class App extends Component {
   // Flashcard Functionality -- Add / Delete / Flip
   addFlashCard() {
     // Function to add a new flashCard to our database
-    const addFlashCardURL = `/units/${ this.state.currentUnitData.id.toString() }`
+    const addFlashCardURL = `/units/${this.state.currentUnitData.id.toString()}`;
 
     fetch(addFlashCardURL, {
       method: 'POST',
@@ -68,24 +69,24 @@ class App extends Component {
         question: document.getElementById('question').value,
         answer: document.getElementById('answer').value,
       }),
-    }).then(response => response.json())
+    }).then((response) => response.json())
       .then((flashCardResponse) => {
         const { flashCards, resources } = flashCardResponse;
-        console.log('currentFlashCards', flashCards )
+        console.log('currentFlashCards', flashCards);
         const questionAnswerArray = this.flashCardQuestionAnswers(flashCards.length);
 
         this.setState({
           currentFlashCards: flashCards,
           currentResources: resources,
           questionsArray: questionAnswerArray,
-        })
+        });
       })
-      .catch(err => console.log('err:', err));
+      .catch((err) => console.log('err:', err));
   }
 
   deleteFlashCard(e) {
-    /// Function to delete a flashCard in our database
-    const deleteFlashCardURL = `/units/${ this.state.currentUnitData.id.toString() }`
+    // / Function to delete a flashCard in our database
+    const deleteFlashCardURL = `/units/${this.state.currentUnitData.id.toString()}`;
 
     fetch(deleteFlashCardURL, {
       method: 'DELETE',
@@ -95,7 +96,7 @@ class App extends Component {
       body: JSON.stringify({
         id: e.target.value,
       }),
-      }).then(response => response.json())
+    }).then((response) => response.json())
       .then((flashCardResponse) => {
         const { flashCards, resources } = flashCardResponse;
         const questionAnswerArray = this.flashCardQuestionAnswers(flashCards.length);
@@ -104,9 +105,9 @@ class App extends Component {
           currentFlashCards: flashCards,
           currentResources: resources,
           questionsArray: questionAnswerArray,
-        })
+        });
       })
-        .catch(err => console.log('err:', err));
+      .catch((err) => console.log('err:', err));
   }
 
   // keeps a running array of true/false for the card flipping. Updates in state.
@@ -122,26 +123,26 @@ class App extends Component {
       }
       return buildQuestionsArray;
       // if the questions array is empty, just populate with a new length index of true
-    } else if (buildQuestionsArray.length === 0) {
-        for (let i = 0; i < cardLength; i += 1) {
-          buildQuestionsArray.push(true);
-        }
-        return buildQuestionsArray;
+    } if (buildQuestionsArray.length === 0) {
+      for (let i = 0; i < cardLength; i += 1) {
+        buildQuestionsArray.push(true);
+      }
+      return buildQuestionsArray;
       // if a card is added, this will push an additional true to the array
-    } else if (currFlashCardQuestionArray.length < cardLength) {
-        for (let i = currFlashCardQuestionArray.length; i < cardLength; i += 1) {
-          buildQuestionsArray.push(true);
-        }
-        return buildQuestionsArray;
+    } if (currFlashCardQuestionArray.length < cardLength) {
+      for (let i = currFlashCardQuestionArray.length; i < cardLength; i += 1) {
+        buildQuestionsArray.push(true);
+      }
+      return buildQuestionsArray;
       // if a card is deleted, just populate and re-render with the new fetched length
       // of cards
-    } else if (currFlashCardQuestionArray.length > cardLength) {
-        const tempArray = [];
-        for (let i = 0; i < cardLength; i += 1) {
-          buildQuestionsArray.push(true);
-        }
-        return tempArray;
+    } if (currFlashCardQuestionArray.length > cardLength) {
+      const tempArray = [];
+      for (let i = 0; i < cardLength; i += 1) {
+        buildQuestionsArray.push(true);
       }
+      return tempArray;
+    }
     return buildQuestionsArray;
   }
 
@@ -158,7 +159,7 @@ class App extends Component {
   // functions to add and delete a unit
   addUnit() {
     // Function to add a new flashCard to our database
-    const addUnitURL = `/units/add-unit`
+    const addUnitURL = '/units/add-unit';
     const unitName = document.getElementById('unit-name');
     const unitDescription = document.getElementById('unit-description');
     const subUnits = document.getElementById('sub-units');
@@ -184,14 +185,14 @@ class App extends Component {
         this.setState({
           units: newUnitResponse,
           postDidMount: true,
-        })
+        });
       })
-      .catch(err => console.log('error in New Unit Response:', err));
+      .catch((err) => console.log('error in New Unit Response:', err));
   }
 
   deleteUnit(cardId) {
-    /// Function to delete a flashCard in our database
-    const deleteUnitURL = `/units/delete-unit`
+    // / Function to delete a flashCard in our database
+    const deleteUnitURL = '/units/delete-unit';
 
     fetch(deleteUnitURL, {
       method: 'DELETE',
@@ -201,8 +202,8 @@ class App extends Component {
       body: JSON.stringify({
         id: cardId,
       }),
-      }).then(response => response.json())
-        .then((deleteUnitResponse) => {
+    }).then((response) => response.json())
+      .then((deleteUnitResponse) => {
         console.log('delete unit response', deleteUnitResponse);
         // Sets a redirect current unit after delete
         const redirectUnit = this.state.units[deleteUnitResponse.length - 1];
@@ -211,33 +212,33 @@ class App extends Component {
           units: deleteUnitResponse,
           currentUnitData: redirectUnit,
           postDidMount: true,
-        })
+        });
       })
-        .catch(err => console.log('error in deleteUnit:', err));
+      .catch((err) => console.log('error in deleteUnit:', err));
   }
+
   // passed to lower components to update state in App.js
-  updateDrilledState(updateObject){
+  updateDrilledState(updateObject) {
     this.setState(updateObject);
   }
 
   componentDidMount() {
     // fetching state after component mounts
-    const unitsURL = '/units'
+    const unitsURL = '/units';
     fetch(unitsURL)
-      .then(data => data.json())
-      .then(data => {
+      .then((data) => data.json())
+      .then((data) => {
         this.setState({
           units: data,
           postDidMount: true,
-        })
+        });
       })
-      .catch(err => console.log('ERROR:', err));
+      .catch((err) => console.log('ERROR:', err));
   }
 
   render() {
-
     if (!this.state.postDidMount) {
-      return ( <h1>We LOADING BABY!</h1> )
+      return (<h1>We LOADING BABY!</h1>);
     }
 
     /**
@@ -248,40 +249,41 @@ class App extends Component {
      */
 
     return (
-      <section className='app-container'>
+      <section className="app-container">
         <Router>
           <Switch>
             <Route path="/main-container">
+              <LoginStatus />
               <MainContainer
                 // Navbar Props
-                units={ this.state.units }
-                updateCurrentUnit= { this.updateCurrentUnit }
+                units={this.state.units}
+                updateCurrentUnit={this.updateCurrentUnit}
                 // Unit Container Props
-                currentUnitIndex={ this.state.currentUnitIndex }
-                currentUnitData={ this.state.currentUnitData }
-                updateDrilledState={ this.updateDrilledState }
-                currentFlashCards={ this.state.currentFlashCards }
-                currentResources={ this.state.currentResources }
-                addFlashCard={ this.addFlashCard }
-                deleteFlashCard={ this.deleteFlashCard }
-                flipFlashCard={ this.flipFlashCard }
-                flashCardQuestionAnswers={ this.flashCardQuestionAnswers }
-                questionsArray={ this.state.questionsArray }
+                currentUnitIndex={this.state.currentUnitIndex}
+                currentUnitData={this.state.currentUnitData}
+                updateDrilledState={this.updateDrilledState}
+                currentFlashCards={this.state.currentFlashCards}
+                currentResources={this.state.currentResources}
+                addFlashCard={this.addFlashCard}
+                deleteFlashCard={this.deleteFlashCard}
+                flipFlashCard={this.flipFlashCard}
+                flashCardQuestionAnswers={this.flashCardQuestionAnswers}
+                questionsArray={this.state.questionsArray}
                 // Add Unit Props
-                addUnit={ this.addUnit }
-                deleteUnit={ this.deleteUnit }
+                addUnit={this.addUnit}
+                deleteUnit={this.deleteUnit}
               />
             </Route>
-            <Route path='/sign-up'>
+            <Route path="/sign-up">
               <SignUpContainer />
             </Route>
-            <Route path='/'>
+            <Route path="/">
               <LoginContainer />
             </Route>
           </Switch>
         </Router>
       </section>
-    )
+    );
   }
 }
 

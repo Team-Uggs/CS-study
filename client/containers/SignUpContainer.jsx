@@ -1,21 +1,21 @@
 import React from 'react';
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 // class to render our main app
-function SignUpContainer (props) {
+function SignUpContainer(props) {
   return (
-    <div class="outerBox">
+    <div className="outerBox">
       <h1>CS Study</h1>
-      <div class="loginsignup">
+      <div className="loginsignup">
         Create an account
-        <form method='POST' action='/signup'>
-          <input name="username" type="text" placeholder="username"></input>
-          <input name="password" type="password"></input>
-          <input type='submit' value='Create User'></input>
+        <form method="POST" action="/user/signup">
+          <input name="username" type="text" placeholder="username" />
+          <input name="password" type="password" />
+          <input type="submit" value="Create User" />
         </form>
         <Link className='submission' to='/'>Log In</Link>
       </div>
     </div>
-  )
+  );
 }
 
 export default SignUpContainer;
