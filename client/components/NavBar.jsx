@@ -11,7 +11,7 @@ function NavBar (props) {
   // However... prior group set the DB ID's for units out of order as well. Will look
   // into changing if possible.
   for (let i = unitsArr.length - 1; i >= 0 ; i -= 1) {
-    unitsLinks.push(<li key={ `nav-bar list item ${ unitsArr[i].id }` }><Link to="/main-container/units" id={`nav-bar-id${ unitsArr[i].id }`} onClick={ (e) => props.updateCurrentUnit(e) }>{ unitsArr[i].unit }</Link></li>)
+    unitsLinks.push(<li key={ `nav-bar list item${ i }` }><Link to="/main-container/units" id={`nav-bar-id ${ i }`} onClick={ (e) => props.updateCurrentUnit(e) }>{ unitsArr[i].unit }</Link></li>)
   }
 
   return (

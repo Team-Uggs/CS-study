@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 
 function NewUnitModal (props) {
   return (
@@ -11,7 +12,7 @@ function NewUnitModal (props) {
           <input id="unit-description" type="text" name="unit-description" /><br></br>
           Sub-Units:<br></br>
           <input id="sub-units" type="text" name="sub-units" /><br></br>
-          <input type="submit" value="Submit"></input>
+          <Link to="/main-container"><button onClick={ props.addUnit } value="Add Unit" className="addUnit" type="button">Add Unit</button></Link>
         </form>
     </div>
   )

@@ -34,12 +34,15 @@ function MainContainer (props) {
               flipFlashCard={ props.flipFlashCard }
               flashCardQuestionAnswers={ props.flashCardQuestionAnswers }
               questionsArray={ props.questionsArray }
+              deleteUnit={ props.deleteUnit }
             />
               : <div></div>
             }
           </Route>
           <Route path='/main-container/create-unit'>
-            <NewUnitContainer />
+            <NewUnitContainer
+              addUnit={ props.addUnit }
+            />
           </Route>
         </Switch>
     </div>

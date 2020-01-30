@@ -14,6 +14,34 @@ unitsRouter.get('/',
     res.status(200).json(res.locals.units);
   });
 
+  unitsRouter.post('/add-unit',
+  unitControllers.addUnits,
+  unitControllers.getUnits,
+  (req, res) => {
+    res.status(200).json(res.locals.units);
+  });
+
+  unitsRouter.patch('/', 
+  unitControllers.updateUnits,
+  (req, res) => {
+    res.status(200).json(res.locals.units)
+  });
+
+  unitsRouter.delete('/delete-unit/',
+  unitControllers.deleteUnits,
+  unitControllers.getUnits,
+  (req, res) => {
+    res.status(200).json(res.locals.units);
+  });
+
+  unitsRouter.get('/quiz',
+  unitControllers.getQuestions,
+  (req, res) => {  
+    res.status(200).json(res.locals.units);
+  });
+
+
+
 // initial load of unit
 unitsRouter.get('/:unitId',
   resourceControllers.getResources,
@@ -50,5 +78,7 @@ unitsRouter.delete('/:unitId',
       resources: res.locals.resources,
     });
   });
+
+  
 
 module.exports = unitsRouter;

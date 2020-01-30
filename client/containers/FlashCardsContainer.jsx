@@ -6,6 +6,8 @@ class FlashCardsContainer extends Component {
   render() {
     const flashCardsArr = [];
 
+    console.log('flash cards', this.props.flashCards)
+
     for (let i = 0; i < this.props.flashCards.length; i+= 1) {
       const { id, unit_id, question, answer} = this.props.flashCards[i];
 
