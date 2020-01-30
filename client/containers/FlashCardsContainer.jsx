@@ -3,23 +3,23 @@ import FlashCards from '../components/FlashCards.jsx'
 
 
 class FlashCardsContainer extends Component {
-
   render() {
     const flashCardsArr = [];
 
     for (let i = 0; i < this.props.flashCards.length; i+= 1) {
       const { id, unit_id, question, answer} = this.props.flashCards[i];
 
-      // flashCardsArr.push(<li>{question}</li>);
-
       flashCardsArr.push(
         <FlashCards
           id={ id }
+          arrayId={ i }
           key={ `flash-card-container${ i }` }
           question={ question }
           answer={ answer }
           unit_id={ unit_id }
-          reRender={ this.props.reRender }
+          deleteFlashCard={ this.props.deleteFlashCard }
+          flipFlashCard={ this.props.flipFlashCard }
+          questionAnswered={ this.props.questionsArray[i] }
         />)
     }
 
@@ -36,7 +36,6 @@ class FlashCardsContainer extends Component {
       </div>
     );
   }
-
 }
 
 export default FlashCardsContainer;

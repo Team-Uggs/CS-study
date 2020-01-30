@@ -1,27 +1,16 @@
-import React, { Component } from 'react';
-import UnitChecklist from './UnitChecklist.jsx';
+import React from 'react';
 
-// add paragraph and checklist components here
-
-class Description extends Component {
-
-  render() {
-
-
-
-    return (
-      <div className="innerbox">
-        <article>
-          <p>{this.props.description}</p>
-        </article>
-        <h4>Sub Topics</h4>
-        <p>{this.props.sub_units}</p>
-        
+function Description (props) {
+  return (
+    <div className="innerbox">
+      <article>
+        <p>{props.description}</p>
+      </article>
+      <h4>Sub Topics</h4>
+      <p>{props.sub_units}</p>
       {/* checklist is stretch */ }
-        
-      </div>
-    )
-  };
+    </div>
+  )
 }
 
 export default Description;
