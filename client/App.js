@@ -23,13 +23,8 @@ class App extends Component {
       currentFlashCards: null,
       currentResources: null,
       question: true,
-<<<<<<< HEAD
-      questionsArray: [],
-    };
-=======
       questionsArray: [true],
-    }
->>>>>>> dev
+    };
 
     this.updateCurrentUnit = this.updateCurrentUnit.bind(this);
     this.updateDrilledState = this.updateDrilledState.bind(this);
@@ -164,14 +159,10 @@ class App extends Component {
   // functions to add and delete a unit
   addUnit() {
     // Function to add a new flashCard to our database
-<<<<<<< HEAD
-    const addUnitURL = `/units/${this.state.currentUnitData.id.toString()}`;
-=======
-    const addUnitURL = `/units/add-unit`
+    const addUnitURL = '/units/add-unit';
     const unitName = document.getElementById('unit-name');
     const unitDescription = document.getElementById('unit-description');
     const subUnits = document.getElementById('sub-units');
->>>>>>> dev
 
     fetch(addUnitURL, {
       method: 'POST',
@@ -193,21 +184,15 @@ class App extends Component {
 
         this.setState({
           units: newUnitResponse,
-<<<<<<< HEAD
-        });
-=======
           postDidMount: true,
-        })
->>>>>>> dev
+        });
       })
       .catch((err) => console.log('error in New Unit Response:', err));
   }
 
-<<<<<<< HEAD
-=======
   deleteUnit(cardId) {
-    /// Function to delete a flashCard in our database
-    const deleteUnitURL = `/units/delete-unit`
+    // / Function to delete a flashCard in our database
+    const deleteUnitURL = '/units/delete-unit';
 
     fetch(deleteUnitURL, {
       method: 'DELETE',
@@ -217,8 +202,8 @@ class App extends Component {
       body: JSON.stringify({
         id: cardId,
       }),
-      }).then(response => response.json())
-        .then((deleteUnitResponse) => {
+    }).then((response) => response.json())
+      .then((deleteUnitResponse) => {
         console.log('delete unit response', deleteUnitResponse);
         // Sets a redirect current unit after delete
         const redirectUnit = this.state.units[deleteUnitResponse.length - 1];
@@ -227,11 +212,11 @@ class App extends Component {
           units: deleteUnitResponse,
           currentUnitData: redirectUnit,
           postDidMount: true,
-        })
+        });
       })
-        .catch(err => console.log('error in deleteUnit:', err));
+      .catch((err) => console.log('error in deleteUnit:', err));
   }
->>>>>>> dev
+
   // passed to lower components to update state in App.js
   updateDrilledState(updateObject) {
     this.setState(updateObject);
@@ -285,12 +270,8 @@ class App extends Component {
                 flashCardQuestionAnswers={this.flashCardQuestionAnswers}
                 questionsArray={this.state.questionsArray}
                 // Add Unit Props
-<<<<<<< HEAD
                 addUnit={this.addUnit}
-=======
-                addUnit={ this.addUnit }
-                deleteUnit={ this.deleteUnit }
->>>>>>> dev
+                deleteUnit={this.deleteUnit}
               />
             </Route>
             <Route path="/sign-up">
