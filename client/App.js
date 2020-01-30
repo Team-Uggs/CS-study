@@ -22,7 +22,7 @@ class App extends Component {
       currentFlashCards: null,
       currentResources: null,
       question: true,
-      questionsArray: [],
+      questionsArray: [true],
     }
 
     this.updateCurrentUnit = this.updateCurrentUnit.bind(this);
@@ -31,6 +31,8 @@ class App extends Component {
     this.deleteFlashCard = this.deleteFlashCard.bind(this);
     this.flipFlashCard = this.flipFlashCard.bind(this);
     this.flashCardQuestionAnswers = this.flashCardQuestionAnswers.bind(this);
+    this.addUnit = this.addUnit.bind(this);
+    this.deleteUnit = this.deleteUnit.bind(this);
   }
 
   // Nav Bar functionality
@@ -38,7 +40,10 @@ class App extends Component {
     // Updates the state with the current selection of units. Slices off the dynamically
     // generated ID from the NavBar component at the last index of the string. This ID
     // will be used to render the info comps below our nav based on selection -mp
-    const currentUnitId = Number(event.target.id.slice(event.target.id.length - 1)) - 1;
+    let currentUnitId = event.target.id.split(' ');
+
+    currentUnitId = Number(currentUnitId[currentUnitId.length - 1]);
+
     const currentUnitData = this.state.units[currentUnitId];
 
     this.setState({
@@ -150,10 +155,13 @@ class App extends Component {
     this.setState({ questionsArray: currentAnswersStateArray });
   }
 
-  // functions to add a unit
+  // functions to add and delete a unit
   addUnit() {
     // Function to add a new flashCard to our database
-    const addUnitURL = `/units/${ this.state.currentUnitData.id.toString() }`
+    const addUnitURL = `/units/add-unit`
+    const unitName = document.getElementById('unit-name');
+    const unitDescription = document.getElementById('unit-description');
+    const subUnits = document.getElementById('sub-units');
 
     fetch(addUnitURL, {
       method: 'POST',
@@ -161,17 +169,51 @@ class App extends Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        unit: document.getElementById('unit-name').value,
-        description: document.getElementById('unit-description').value,
-        sub_units: document.getElementById('sub-units').value,
+        unit: unitName.value,
+        description: unitDescription.value,
+        sub_units: subUnits.value,
       }),
-    }).then(response => response.json())
+    }).then((response) => response.json())
       .then((newUnitResponse) => {
+        console.log('new unit response', newUnitResponse);
+
+        unitName.value = '';
+        unitDescription.value = '';
+        subUnits.value = '';
+
         this.setState({
           units: newUnitResponse,
+          postDidMount: true,
         })
       })
       .catch(err => console.log('error in New Unit Response:', err));
+  }
+
+  deleteUnit(cardId) {
+    /// Function to delete a flashCard in our database
+    const deleteUnitURL = `/units/delete-unit`
+
+    fetch(deleteUnitURL, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        id: cardId,
+      }),
+      }).then(response => response.json())
+        .then((deleteUnitResponse) => {
+        console.log('delete unit response', deleteUnitResponse);
+        // Sets a redirect current unit after delete
+        const redirectUnit = this.state.units[deleteUnitResponse.length - 1];
+
+        this.setState({
+          units: deleteUnitResponse,
+          currentUnitData: redirectUnit,
+          postDidMount: true,
+        })
+      })
+        .catch(err => console.log('error in deleteUnit:', err));
   }
   // passed to lower components to update state in App.js
   updateDrilledState(updateObject){
@@ -227,6 +269,7 @@ class App extends Component {
                 questionsArray={ this.state.questionsArray }
                 // Add Unit Props
                 addUnit={ this.addUnit }
+                deleteUnit={ this.deleteUnit }
               />
             </Route>
             <Route path='/sign-up'>

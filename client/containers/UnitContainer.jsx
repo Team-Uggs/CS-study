@@ -13,7 +13,14 @@ class UnitContainer extends React.Component {
       .then((response) => response.json())
       .then((data) => {
         // console.log('flashCard Data', data.flashCards.length)
-        const questionAnswerArray = this.props.flashCardQuestionAnswers(data.flashCards.length)
+        let questionAnswerArray = [];
+        // if it's a new card (with no questions) we will push a true to questionsArray,
+        // as its required for conditional rendering
+        if (data.flashCards.length <= 0) questionAnswerArray.push(true);
+        // if it's an existing card with questions, we will populate the array based on
+        // length of questions array
+        else questionAnswerArray = this.props.flashCardQuestionAnswers(data.flashCards.length)
+
         this.props.updateDrilledState({
             questionsArray: questionAnswerArray,
             currentFlashCards: data.flashCards,
@@ -57,8 +64,10 @@ class UnitContainer extends React.Component {
                   />
                 <Resources
                   resources={ this.props.currentResources } />
-              </div> :
-              <div></div> }
+                <button onClick={() => this.props.deleteUnit(this.props.currentUnitData.id.toString())} className="deleteUnit" type="button">Delete Unit</button>
+              </div>
+              :
+            <div></div> }
         </div>
       </div>
     );

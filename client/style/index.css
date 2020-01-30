@@ -60,9 +60,10 @@ h4 {
   display: flex;
   justify-content: center;
   list-style-type: none;
-  /* flex-direction: column; */
+  flex-wrap: wrap;
 }
 #navbarList a {
+  display: flex;
   color: white;
   flex: 1;
   list-style-type: none;

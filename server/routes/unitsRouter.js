@@ -27,7 +27,7 @@ unitsRouter.get('/',
     res.status(200).json(res.locals.units)
   });
 
-  unitsRouter.delete('/delete-unit/:id',
+  unitsRouter.delete('/delete-unit/',
   unitControllers.deleteUnits,
   unitControllers.getUnits,
   (req, res) => {
