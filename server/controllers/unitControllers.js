@@ -53,13 +53,15 @@ unitControllers.getQuestions = (req, res, next) => {
     .then((response) => {
       const arrOfQuestions = response.rows;
       let randomNums = [];
-      for(let i = 0; i < arrOfQuestions.length; i++) {
+      const randomNumsLength = 5;
+      while(randomNums.length < randomNumsLength) {
         let x = (arrOfQuestions[Math.floor(Math.random() * arrOfQuestions.length)]);
         if(!randomNums.includes(x)){
           randomNums.push(x);
-          console.log(randomNums)
+          // console.log(randomNums)
     }
 }
+
       // console.log('response is:', response.rows.length);
       res.locals.units = randomNums;
       return next();
