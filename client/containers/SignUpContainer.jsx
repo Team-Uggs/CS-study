@@ -12,7 +12,7 @@ function SignUpContainer(props) {
           <input name="password" type="password" />
           <input type="submit" value="Create User" />
         </form>
-        <Link to="/">Log In</Link>
+        <Link className='submission' to='/'>Log In</Link>
       </div>
     </div>
   );

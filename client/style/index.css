@@ -7,6 +7,8 @@
 }
 
 body {
+  display: flex;
+  justify-content: center;
   background-color: #020C25;
   color: white;
 }
@@ -80,6 +82,16 @@ a:hover {
   background-color: #02A3E9;
 }
 
+.new-unit-navbar {
+  display: flex;
+  justify-content: center;
+}
+
+.new-unit-button {
+  align-items: center;
+  text-align: center;
+}
+
 .flashCardList {
   display: flex;
   flex-wrap: wrap;
@@ -108,6 +120,22 @@ a:hover {
   border-radius: 3px;
   font-size: 15px;
   margin-left: 10px;
+}
+
+.submission {
+  background-color: #02A3E9;
+  color: white;
+  width: 150px;
+  height: 60px;
+  border-radius: 3px;
+  font-size: 15px;
+  margin-left: 10px;
+}
+
+
+.submission:hover {
+  background-color: white;
+  color: #02A3E9;
 }
 
 #add:hover {
